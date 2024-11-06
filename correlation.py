@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Define the input signals
 x = np.array([1, 2, 3, 4, 5])
-y = np.array([5,4,3,2, 1])
+y = np.array([3,2, 1])
 
 # Lengths of the input signals
 n = len(x)
@@ -13,11 +13,11 @@ m = len(y)
 cross_correlation_full = []
 
 # Calculate cross-correlation for each lag
-for lag in range(-n + 1, m):
+for lag in range(-m + 1, n):
     sum_product = 0
-    for i in range(n):
+    for i in range(m):
         j = i + lag
-        if 0 <= j < m:
+        if 0 <= j < n:
             sum_product += y[i] * x[j]
     cross_correlation_full.append(sum_product)
 
@@ -25,7 +25,7 @@ for lag in range(-n + 1, m):
 cross_correlation_full = np.array(cross_correlation_full)
 
 # Define the lag vector
-lags = np.arange(-n + 1, m)
+lags = np.arange(-m + 1, n)
 
 # Plot the input signals
 plt.figure(figsize=(12, 8))
