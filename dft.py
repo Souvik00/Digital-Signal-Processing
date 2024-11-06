@@ -25,8 +25,13 @@ sampled_signal = np.sin(2 * np.pi * 5 * time_samples) + np.sin(2 * np.pi * 10 * 
 # Calculate the DFT of the sampled signal
 dft_signal = dft(sampled_signal)
 
-# Calculate the frequency axis for the DFT
-freq_axis = np.fft.fftfreq(num_samples, d=1/sampling_rate)
+# Calculate the frequency axis for the DFT manually
+N = num_samples  # Number of samples
+T = 1 / sampling_rate  # Sampling interval
+df = 1 / (N * T)  # Frequency resolution
+
+# Generate the frequency axis
+freq_axis = np.arange(0, N) * df
 
 # Plot the continuous-time signal
 plt.figure(figsize=(20, 12))
@@ -50,11 +55,11 @@ plt.xlabel('Frequency (Hz)')
 plt.ylabel('Magnitude')
 plt.title('Magnitude Spectrum of DFT')
 
-# Plot the phase spectrum of the DFT
+# Plot the phase spectrum of the DFT in degrees
 plt.subplot(6, 1, 4)
-plt.stem(freq_axis, np.angle(dft_signal))
+plt.stem(freq_axis, np.degrees(np.angle(dft_signal)))
 plt.xlabel('Frequency (Hz)')
-plt.ylabel('Phase (radians)')
+plt.ylabel('Phase (Degrees)')
 plt.title('Phase Spectrum of DFT')
 
 # Plot the real part of the DFT
@@ -70,6 +75,7 @@ plt.stem(freq_axis, np.imag(dft_signal))
 plt.xlabel('Frequency (Hz)')
 plt.ylabel('Imaginary Part')
 plt.title('Imaginary Part of DFT')
+
 
 plt.tight_layout()
 plt.show()
