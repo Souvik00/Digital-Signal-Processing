@@ -5,11 +5,16 @@ x = np.array([1, 2, 3, 4, 5])
 h = np.array([1, 2, 1])
 y = np.zeros(len(x) + len(h) - 1)
 for n in range(len(y)):
-    for k in range(max(0, n - len(h) + 1), min(n + 1, len(x))):
-        y[n] += x[k] * h[n - k]
+    xx = min(n, len(x) - 1)
+    yy = max(0, n - len(x) + 1)
+    while xx >= 0 and yy < len(h):
+        y[n] += x[xx] * h[yy]
+        xx -= 1
+        yy += 1
 
 # Plot the input signal
 plt.figure(figsize=(10, 6))
+
 plt.subplot(3, 1, 1)
 plt.stem(x)
 plt.title('Input Signal')
