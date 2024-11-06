@@ -6,8 +6,17 @@ y = np.array([5, 4, 3, 2, 1])
 
 corr = np.zeros(len(x) + len(y) - 1)
 for n in range(len(corr)):
-    for k in range(max(0, n - len(y) + 1), min(n + 1, len(x))):
-        corr[n] += x[k] * y[n - k]
+    if n < len(x):
+        xx = n
+        yy = 0
+    else:
+        xx = len(x) - 1
+        yy = n - len(x) + 1
+    while xx >= 0 and yy < len(y):
+        corr[n] += x[xx] * y[yy]
+        xx -= 1
+        yy += 1
+
 
 # Plot the input signal x(n)
 plt.figure(figsize=(10, 6))
@@ -36,4 +45,3 @@ plt.grid(True)
 
 plt.tight_layout()
 plt.show()
-
