@@ -5,8 +5,12 @@ x = np.array([1, 2, 3, 4, 5])
 h = np.array([1, 2, 1])
 y = np.zeros(len(x) + len(h) - 1)
 for n in range(len(y)):
-    xx = min(n, len(x) - 1)
-    yy = max(0, n - len(x) + 1)
+    if n < len(x):
+        xx = n
+        yy = 0
+    else:
+        xx = len(x) - 1
+        yy = n - len(x) + 1
     while xx >= 0 and yy < len(h):
         y[n] += x[xx] * h[yy]
         xx -= 1
