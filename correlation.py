@@ -1,46 +1,55 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Define the input signals
 x = np.array([1, 2, 3, 4, 5])
-y = np.array([5, 4, 3, 2, 1])
+y = np.array([5,4,3,2, 1])
 
-corr = np.zeros(len(x) + len(y) - 1)
-for n in range(len(corr)):
-    if n < len(x):
-        xx = n
-        yy = 0
-    else:
-        xx = len(x) - 1
-        yy = n - len(x) + 1
-    while xx >= 0 and yy < len(y):
-        corr[n] += x[xx] * y[yy]
-        xx -= 1
-        yy += 1
+# Lengths of the input signals
+n = len(x)
+m = len(y)
 
+# Initialize the list to hold cross-correlation values
+cross_correlation_full = []
 
-# Plot the input signal x(n)
-plt.figure(figsize=(10, 6))
+# Calculate cross-correlation for each lag
+for lag in range(-n + 1, m):
+    sum_product = 0
+    for i in range(n):
+        j = i + lag
+        if 0 <= j < m:
+            sum_product += y[i] * x[j]
+    cross_correlation_full.append(sum_product)
+
+# Convert the cross-correlation result to a numpy array
+cross_correlation_full = np.array(cross_correlation_full)
+
+# Define the lag vector
+lags = np.arange(-n + 1, m)
+
+# Plot the input signals
+plt.figure(figsize=(12, 8))
+
 plt.subplot(3, 1, 1)
-plt.stem(x)
-plt.title('Signal x(n)')
-plt.xlabel('n')
-plt.ylabel('x[n]')
+plt.stem(np.arange(n), x)
+plt.title('Input Signal x')
+plt.xlabel('Index')
+plt.ylabel('Amplitude')
 plt.grid(True)
 
-# Plot the input signal y(n)
 plt.subplot(3, 1, 2)
-plt.stem(y)
-plt.title('Signal y(n)')
-plt.xlabel('n')
-plt.ylabel('y[n]')
+plt.stem(np.arange(m), y)
+plt.title('Input Signal y')
+plt.xlabel('Index')
+plt.ylabel('Amplitude')
 plt.grid(True)
 
-# Plot the correlation r(n)
+# Plot the cross-correlation result
 plt.subplot(3, 1, 3)
-plt.stem(corr)
-plt.title('Correlation')
-plt.xlabel('n')
-plt.ylabel('r[n]')
+plt.stem(lags, cross_correlation_full)
+plt.title('Cross-Correlation of x and y')
+plt.xlabel('Lag')
+plt.ylabel('Cross-Correlation')
 plt.grid(True)
 
 plt.tight_layout()
