@@ -25,13 +25,8 @@ sampled_signal = np.sin(2 * np.pi * 5 * time_samples) + np.sin(2 * np.pi * 10 * 
 # Calculate the DFT of the sampled signal
 dft_signal = dft(sampled_signal)
 
-# Calculate the frequency axis for the DFT manually
-N = num_samples  # Number of samples
-T = 1 / sampling_rate  # Sampling interval
-df = 1 / (N * T)  # Frequency resolution
-
 # Generate the frequency axis
-freq_axis = np.arange(0, N) * df
+freq_axis = np.arange(0, N) 
 
 # Plot the continuous-time signal
 plt.figure(figsize=(20, 12))
